@@ -1,17 +1,25 @@
+import { BrowserRouter,Route,Routes } from "react-router-dom"
+import { lazy,Suspense } from "react"
+const Home = lazy(()=>import("./pages/Home"))
+const Cart = lazy(()=>import("./pages/Cart"))
+const Search = lazy(()=>import("./pages/Search"))
 
-import toast, { Toaster } from 'react-hot-toast';
-
-import './App.css'
-
+import Load from "./pages/Load"
+import Header from "./components/Header"
 function App() {
-  const notify = () => toast('Here is your toast.');
   return (
     <>
-     
-    <div>
-      <button onClick={notify}>Make me a toast</button>
-      <Toaster />
-    </div>
+      <BrowserRouter>
+      <Header/>
+        <Suspense fallback={<Load/>}>
+          <Routes> 
+            <Route path="/" element={<Home/>}/>
+            <Route path="/cart" element={<Cart/>}/>
+            <Route path="/search" element={<Search/>}/>
+            <Route path=""/>
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
     </>
   )
 }
